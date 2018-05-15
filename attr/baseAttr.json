@@ -1,0 +1,22 @@
+[
+    {
+        "name": "margin-left",
+        "value": "0",
+        "type": "number"
+    },
+    {
+        "name": "margin-right",
+        "value": "0",
+        "type": "number"
+    },
+    {
+        "name": "margin-top",
+        "value": "0",
+        "type": "number"
+    },
+    {
+        "name": "margin-bottom",
+        "value": "0",
+        "type": "number"
+    }
+]

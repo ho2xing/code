@@ -72,10 +72,9 @@
   <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
   <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
   <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="./dist/jquery.tmpl.min.js"></script>
-  <script src="./dist/jquery.tmplplus.min.js"></script>
   <script src="./dist/jquery.binding.js"></script>
   <script src="./dist/jquery.cookie.js"></script>
+  <script src="./dist/component.js"></script>
   <script src="./dist/createHtml.js"></script>
 
   <script type="text/javascript">
@@ -99,18 +98,14 @@
       $("#phone").css({ "backgroundColor": background });
       var phone = document.getElementById('phone');
 
-      var inputGroup = document.getElementById("inputGroup");
+      function bindAttr(){
+          var el = $("#phone");
+          var attr = Attr.create(el);
+      }
 
-      Sortable.create(inputGroup, {
-        animation: 200,
-        group: {
-          name: "shared",
-          pull: "clone",
-          dataIdAttr: 'data-id',
-          revertClone: true,
-        },
-        sort: true
-      })
+      function warpUpdate(){
+
+      }
 
       var phoneObjectArray;
 
@@ -121,6 +116,7 @@
         onAdd: function (/**Event*/evt) {
           phoneObjectArray = phoneObject.toArray();
           console.log(evt);
+          warpUpdate();
         },
         onRemove: function (/**Event*/evt) {
           phoneObjectArray = phoneObject.toArray();
@@ -135,7 +131,39 @@
         }
       });
 
+      
 
+      var component = Component.create();
+      component.add({ dir: "singleInput" });
+      component.add({ dir: "title" });
+      component.add({ dir: "numberInput" });
+      component.appendTo("#tab1", function () {
+        $("#tab1").children().each(function (index) {
+          if (index > 0) {
+            $(this).css({ "margin-top": "10px" });
+          }
+
+        })
+        var bindOptions = {
+          animation: 200,
+          group: {
+            name: "shared",
+            pull: "clone",
+            dataIdAttr: 'data-id',
+            revertClone: true,
+          },
+          sort: true
+        };
+
+        $("#phone").children().each(function (index) {
+          $(this).click(function () {
+
+          });
+        })
+        Sortable.create(document.getElementById("singleInput"), bindOptions);
+        Sortable.create(document.getElementById("title"), bindOptions);
+        Sortable.create(document.getElementById("numberInput"), bindOptions);
+      })
     });
   </script>
 </head>
@@ -157,15 +185,7 @@
 
         <!-- Tab panes -->
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" style="background-color: #ccc;padding: 10px;" id="home">
-
-            <div id="inputGroup">
-              <div class="inputBox" data-id="5" onclick="changeContentWarp(5 , '#ContentWarp')">
-                <div class="inputBox-left">名称</div>
-                <input class="inputBox-right" type="text" placeholder="Username" aria-describedby="sizing-addon1">
-              </div>
-            </div>
-
+          <div role="tabpanel" class="tab-pane active" style="background-color: #ccc;padding: 10px;" id="tab1">
           </div>
           <div role="tabpanel" class="tab-pane" id="profile">...</div>
         </div>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="./dist/component.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var component = Component.create();
+            component.add({ dir: "singleInput" });
+            component.add({ dir: "title" });
+            component.add({ dir: "numberInput" });
+            component.build("#warp")
+   
+        });
+    </script>
+</head>
+
+<body>
+    <div id="warp"></div>
+     
+</body>
+
+</html>
