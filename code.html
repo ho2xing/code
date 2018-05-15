@@ -75,7 +75,7 @@
   <script src="./dist/jquery.binding.js"></script>
   <script src="./dist/jquery.cookie.js"></script>
   <script src="./dist/component.js"></script>
-  <script src="./dist/createHtml.js"></script>
+  <script src="./dist/attr.js"></script>
 
   <script type="text/javascript">
     $(document).ready(function () {
@@ -98,15 +98,6 @@
       $("#phone").css({ "backgroundColor": background });
       var phone = document.getElementById('phone');
 
-      function bindAttr(){
-          var el = $("#phone");
-          var attr = Attr.create(el);
-      }
-
-      function warpUpdate(){
-
-      }
-
       var phoneObjectArray;
 
 
@@ -115,12 +106,17 @@
         sort: true,
         onAdd: function (/**Event*/evt) {
           phoneObjectArray = phoneObject.toArray();
-          console.log(evt);
-          warpUpdate();
+          Sortable.utils.on(evt.item , "click" ,function(){
+              Attr.create($("#ContentWarp"));
+          });
+          
+         
         },
         onRemove: function (/**Event*/evt) {
           phoneObjectArray = phoneObject.toArray();
-          //console.log(phoneObjectArray);
+           Sortable.utils.on(evt.item, "click", function () {
+            Attr.create($("#ContentWarp"));
+          });
         },
         onSort: function (/**Event*/evt) {
           phoneObjectArray = phoneObject.toArray();
@@ -142,7 +138,6 @@
           if (index > 0) {
             $(this).css({ "margin-top": "10px" });
           }
-
         })
         var bindOptions = {
           animation: 200,
@@ -152,7 +147,7 @@
             dataIdAttr: 'data-id',
             revertClone: true,
           },
-          sort: true
+           sort: false,
         };
 
         $("#phone").children().each(function (index) {

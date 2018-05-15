@@ -1,28 +1,28 @@
-(function (f) {
+(function (factory) {
 
     "use strict";
 
     if (typeof define === "function" && define.amd) {
-        define(f);
+        define(factory);
     }
     else if (typeof module != "undefined" && typeof module.exports != "undefined") {
-        module.exports = f();
+        module.exports = factory();
     }
     else if (typeof Package !== "undefined") {
-        Attr = f();  // export for Meteor.js
+        Attr = factory();  // export for Meteor.js
     }
     else {
-        window["Attr"] = f();
+        window["Attr"] = factory();
     }
 })(function () {
 
     "use strict";
-    var baseAttr , element, 
+    var baseAttr , element;
 
-    function _createInput(options) {
+    function _createInput(obj) {
         var html = "<div class=\"input-group mt10\"  >";
-        html += "<span class=\"input-group-addon\" id=\"basic-addon1\">" + options.name + "</span>";
-        html += "<input id=\"attr-" + options.name + "\" type=\"" + options.type + "\" value=\"" + options.value + "\" class=\"form-control\"   aria-describedby=\"basic-addon1\">";
+        html += "<span class=\"input-group-addon\" id=\"basic-addon1\">" + obj.name + "</span>";
+        html += "<input id=\"attr-" + obj.name + "\" type=\"" + obj.type + "\" value=\"" + obj.value + "\" class=\"form-control\"   aria-describedby=\"basic-addon1\">";
         html += "</div>"
         return html;
     }
@@ -31,7 +31,7 @@
         element = el;
         $.get("./attr/baseAttr.json", function(ret){
             baseAttr = ret;
-            var t;
+            var t = "";
             for(var i = 0 ; i < ret.length ; i ++){
                 t += _createInput(ret[i]);
             }
@@ -46,7 +46,7 @@
 
     /**
      */
-    Attr.create = function () {
+    Attr.create = function (el) {
         return new Attr(el);
     };
 
