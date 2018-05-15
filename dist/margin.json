@@ -1,0 +1,37 @@
+{
+    "componentName ": "单行输入控件",
+    "id": 5,
+    "margin": {
+        "title": "控件外部属性",
+        "attr": [
+            {
+                "type": "number",
+                "value": "0",
+                "min": "0",
+                "name": "margin-left",
+                "id": "w-marginLeft"
+            },
+            {
+                "type": "number",
+                "value": "0",
+                "min": "0",
+                "name": "margin-right",
+                "id": "w-marginRight"
+            },
+            {
+                "type": "number",
+                "value": "0",
+                "min": "0",
+                "name": "margin-top",
+                "id": "w-marginTop"
+            },
+            {
+                "type": "number",
+                "value": "0",
+                "min": "0",
+                "name": "margin-bottom",
+                "id": "w-marginBottom"
+            }
+        ]
+    }
+}

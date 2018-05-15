@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+  <style>
+    #warp {
+      width: 1024px;
+    }
+
+    #phone {
+      width: 410px;
+      height: 800px;
+      border: steelblue 1px solid;
+      overflow: scroll;
+
+    }
+
+    #list {
+      padding-top: 30px;
+
+    }
+
+    .flex-warp {
+      display: -webkit-flex;
+      /* Safari */
+      display: flex;
+    }
+
+    .flex-row {
+      flex-direction: row;
+    }
+
+    .flex-col {
+      flex-direction: column;
+    }
+
+    .inputBox {
+      display: -webkit-flex;
+      /* Safari */
+      display: flex;
+      background-color: white;
+      padding: 10px;
+      flex-direction: row;
+      cursor: pointer;
+    }
+
+    .inputBox-left {
+      height: 36px;
+      line-height: 36px;
+    }
+
+    .inputBox-right {
+      height: 36px;
+      line-height: 36px;
+      flex: 1;
+      margin-left: 10px;
+      padding-left: 10px;
+      margin-right: 10px;
+    }
+
+    .mt10 {
+      margin-top: 10px;
+    }
+  </style>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  <!-- Latest Sortable -->
+  <script src="./dist/Sortable.min.js"></script>
+  <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+  <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+  <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+  <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="./dist/jquery.tmpl.min.js"></script>
+  <script src="./dist/jquery.tmplplus.min.js"></script>
+  <script src="./dist/jquery.binding.js"></script>
+  <script src="./dist/jquery.cookie.js"></script>
+  <script src="./dist/createHtml.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $.cookie.json = true;
+
+      $('#myTabs a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+      })
+
+      var background = $("#bc").val();
+      $("#bc").change(function () {
+        try {
+          var bcColor = $("#bc").val();
+          $(this).css({ "backgroundColor": bcColor });
+          $("#phone").css({ "backgroundColor": bcColor });
+        } catch{
+        }
+      });
+      $("#phone").css({ "backgroundColor": background });
+      var phone = document.getElementById('phone');
+
+      var inputGroup = document.getElementById("inputGroup");
+
+      Sortable.create(inputGroup, {
+        animation: 200,
+        group: {
+          name: "shared",
+          pull: "clone",
+          dataIdAttr: 'data-id',
+          revertClone: true,
+        },
+        sort: true
+      })
+
+      var phoneObjectArray;
+
+
+      var phoneObject = Sortable.create(phone, {
+        group: "shared",
+        sort: true,
+        onAdd: function (/**Event*/evt) {
+          phoneObjectArray = phoneObject.toArray();
+          console.log(evt);
+        },
+        onRemove: function (/**Event*/evt) {
+          phoneObjectArray = phoneObject.toArray();
+          //console.log(phoneObjectArray);
+        },
+        onSort: function (/**Event*/evt) {
+          phoneObjectArray = phoneObject.toArray();
+          //console.log(phoneObjectArray);
+        },
+        onUpdate: function (evt) {
+          console.log(evt);
+        }
+      });
+
+
+    });
+  </script>
+</head>
+
+<body>
+
+  <div class="container" style="padding-top: 30px;">
+    <div class="row">
+      <div class="col-md-4">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active">
+            <a href="#home" aria-controls="home" role="tab" data-toggle="tab">组件</a>
+          </li>
+          <li role="presentation">
+            <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">模块</a>
+          </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" style="background-color: #ccc;padding: 10px;" id="home">
+
+            <div id="inputGroup">
+              <div class="inputBox" data-id="5" onclick="changeContentWarp(5 , '#ContentWarp')">
+                <div class="inputBox-left">名称</div>
+                <input class="inputBox-right" type="text" placeholder="Username" aria-describedby="sizing-addon1">
+              </div>
+            </div>
+
+          </div>
+          <div role="tabpanel" class="tab-pane" id="profile">...</div>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div id="phone" class="flex-warp flex-col"></div>
+
+      </div>
+      <div class="col-md-3 ">
+        <div id="baseWarp">
+
+
+          <div class="page-header">
+            <h5>基本</h5>
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">background-color</span>
+            <input id="bc" type="text" value="#EEE" class="form-control" placeholder="background-color" aria-describedby="basic-addon1">
+          </div>
+
+
+        </div>
+        <div id="ContentWarp">
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
