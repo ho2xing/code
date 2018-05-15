@@ -76,10 +76,18 @@
   <script src="./dist/jquery.cookie.js"></script>
   <script src="./dist/component.js"></script>
   <script src="./dist/attr.js"></script>
+  <script src="./dist/utils.js"></script>
 
   <script type="text/javascript">
+
+
+
+
     $(document).ready(function () {
+      var app = new Object();
+
       $.cookie.json = true;
+
 
       $('#myTabs a').click(function (e) {
         e.preventDefault()
@@ -109,8 +117,10 @@
           Sortable.utils.on(evt.item , "click" ,function(){
               Attr.create($("#ContentWarp"));
           });
-          
-         
+
+          getData(phoneObject);
+          alert(evt.item.unique_id);
+         console.log(evt);
         },
         onRemove: function (/**Event*/evt) {
           phoneObjectArray = phoneObject.toArray();
@@ -121,6 +131,7 @@
         onSort: function (/**Event*/evt) {
           phoneObjectArray = phoneObject.toArray();
           //console.log(phoneObjectArray);
+          alert(evt.item.unique_id);
         },
         onUpdate: function (evt) {
           console.log(evt);
@@ -148,6 +159,9 @@
             revertClone: true,
           },
            sort: false,
+           setData:function(dataTransfer, dragEl){
+            dragEl.unique_id = generateUUID();
+           }
         };
 
         $("#phone").children().each(function (index) {
