@@ -80,13 +80,10 @@
 
   <script type="text/javascript">
 
-
-
-
     $(document).ready(function () {
-      var app = new Object();
-
-      $.cookie.json = true;
+     
+      var _attr = Attr.init();
+      var _utils = Sortable.utils;
 
 
       $('#myTabs a').click(function (e) {
@@ -113,32 +110,44 @@
         group: "shared",
         sort: true,
         onAdd: function (/**Event*/evt) {
-          phoneObjectArray = phoneObject.toArray();
-          Sortable.utils.on(evt.item , "click" ,function(){
-              Attr.create($("#ContentWarp"));
-          });
+          function addBaseAttr() {
+            _attr.html($("#baseWarp"), evt.item.unique_id, function (data) {
+              var attrName = data.attr.name + "";
+              var attrValue = data.attr.value + "px";
+              $(evt.item).css(attrName, attrValue);
+            });
+          }
 
-          getData(phoneObject);
-          alert(evt.item.unique_id);
-         console.log(evt);
+          function addPrivateAttr(){
+            _attr.phtml($("#privatePropertyWarp"), evt.item.unique_id,  function (data) {
+              var attrName = data.attr.name + "";
+              var attrValue = data.attr.value + "px";
+              $(evt.item).css(attrName, attrValue);
+            });
+          }
+
+          addBaseAttr();
+          _utils.on(evt.item, "click", function () {
+            addBaseAttr();
+          });
+          
+          console.log(evt);
         },
         onRemove: function (/**Event*/evt) {
           phoneObjectArray = phoneObject.toArray();
-           Sortable.utils.on(evt.item, "click", function () {
-            Attr.create($("#ContentWarp"));
-          });
+
         },
         onSort: function (/**Event*/evt) {
           phoneObjectArray = phoneObject.toArray();
           //console.log(phoneObjectArray);
-          alert(evt.item.unique_id);
+          // alert(evt.item.unique_id);
         },
         onUpdate: function (evt) {
-          console.log(evt);
+         
         }
       });
 
-      
+
 
       var component = Component.create();
       component.add({ dir: "singleInput" });
@@ -158,10 +167,10 @@
             dataIdAttr: 'data-id',
             revertClone: true,
           },
-           sort: false,
-           setData:function(dataTransfer, dragEl){
+          sort: false,
+          setData: function (dataTransfer, dragEl) {
             dragEl.unique_id = generateUUID();
-           }
+          }
         };
 
         $("#phone").children().each(function (index) {
@@ -205,20 +214,28 @@
       </div>
       <div class="col-md-3 ">
         <div id="baseWarp">
-
-
           <div class="page-header">
-            <h5>基本</h5>
+            <h5>手机页面背景</h5>
           </div>
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">background-color</span>
             <input id="bc" type="text" value="#EEE" class="form-control" placeholder="background-color" aria-describedby="basic-addon1">
           </div>
-
-
         </div>
-        <div id="ContentWarp">
+        <div>
+          <div class="page-header">
+            <h5>控件外部边距</h5>
+          </div>
+          <div id="baseWarp">
+          </div>
+        </div>
 
+        <div>
+          <div class="page-header">
+            <h5>私有属性</h5>
+          </div>
+          <div id="privatePropertyWarp">
+          </div>
         </div>
 
       </div>

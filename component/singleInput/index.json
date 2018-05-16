@@ -1,6 +1,11 @@
 {
     "id": 2,
-    "name": "名称",
+    "name": "文本输入框",
     "desc": "",
-    "target" :"#ContentWarp"
+    "privateAttr":[
+        "name",
+        "placeholder",
+        "max",
+        "min"
+    ]
 }
