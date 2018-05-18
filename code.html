@@ -9,7 +9,7 @@
       width: 1024px;
     }
 
-    #phone {
+    #phoneArea {
       width: 410px;
       height: 800px;
       border: steelblue 1px solid;
@@ -77,14 +77,13 @@
   <script src="./dist/component.js"></script>
   <script src="./dist/attr.js"></script>
   <script src="./dist/utils.js"></script>
+  <script src="./dist/app.js"></script>
 
   <script type="text/javascript">
 
     $(document).ready(function () {
-     
-      var _attr = Attr.init();
-      var _utils = Sortable.utils;
 
+      App.init();
 
       $('#myTabs a').click(function (e) {
         e.preventDefault()
@@ -101,93 +100,13 @@
         }
       });
       $("#phone").css({ "backgroundColor": background });
-      var phone = document.getElementById('phone');
-
-      var phoneObjectArray;
 
 
-      var phoneObject = Sortable.create(phone, {
-        group: "shared",
-        sort: true,
-        onAdd: function (/**Event*/evt) {
-          function addBaseAttr() {
-            _attr.html($("#baseWarp"), evt.item.unique_id, function (data) {
-              var attrName = data.attr.name + "";
-              var attrValue = data.attr.value + "px";
-              $(evt.item).css(attrName, attrValue);
-            });
-          }
-
-          function addPrivateAttr(){
-            _attr.phtml($("#privatePropertyWarp"), evt.item.unique_id,  function (data) {
-              var attrName = data.attr.name + "";
-              var attrValue = data.attr.value + "px";
-              $(evt.item).css(attrName, attrValue);
-            });
-          }
-
-          addBaseAttr();
-          _utils.on(evt.item, "click", function () {
-            addBaseAttr();
-          });
-          
-          console.log(evt);
-        },
-        onRemove: function (/**Event*/evt) {
-          phoneObjectArray = phoneObject.toArray();
-
-        },
-        onSort: function (/**Event*/evt) {
-          phoneObjectArray = phoneObject.toArray();
-          //console.log(phoneObjectArray);
-          // alert(evt.item.unique_id);
-        },
-        onUpdate: function (evt) {
-         
-        }
-      });
-
-
-
-      var component = Component.create();
-      component.add({ dir: "singleInput" });
-      component.add({ dir: "title" });
-      component.add({ dir: "numberInput" });
-      component.appendTo("#tab1", function () {
-        $("#tab1").children().each(function (index) {
-          if (index > 0) {
-            $(this).css({ "margin-top": "10px" });
-          }
-        })
-        var bindOptions = {
-          animation: 200,
-          group: {
-            name: "shared",
-            pull: "clone",
-            dataIdAttr: 'data-id',
-            revertClone: true,
-          },
-          sort: false,
-          setData: function (dataTransfer, dragEl) {
-            dragEl.unique_id = generateUUID();
-          }
-        };
-
-        $("#phone").children().each(function (index) {
-          $(this).click(function () {
-
-          });
-        })
-        Sortable.create(document.getElementById("singleInput"), bindOptions);
-        Sortable.create(document.getElementById("title"), bindOptions);
-        Sortable.create(document.getElementById("numberInput"), bindOptions);
-      })
     });
   </script>
 </head>
 
 <body>
-
   <div class="container" style="padding-top: 30px;">
     <div class="row">
       <div class="col-md-4">
@@ -209,39 +128,35 @@
         </div>
       </div>
       <div class="col-md-5">
-        <div id="phone" class="flex-warp flex-col"></div>
+        <div id="phoneArea" class="flex-warp flex-col"></div>
 
       </div>
       <div class="col-md-3 ">
-        <div id="baseWarp">
-          <div class="page-header">
-            <h5>手机页面背景</h5>
-          </div>
-          <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">background-color</span>
-            <input id="bc" type="text" value="#EEE" class="form-control" placeholder="background-color" aria-describedby="basic-addon1">
-          </div>
+
+        <div class="page-header">
+          <h5>手机页面背景</h5>
         </div>
-        <div>
-          <div class="page-header">
-            <h5>控件外部边距</h5>
-          </div>
-          <div id="baseWarp">
-          </div>
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">background-color</span>
+          <input id="bc" type="text" value="#EEE" class="form-control" placeholder="background-color" aria-describedby="basic-addon1">
         </div>
 
-        <div>
-          <div class="page-header">
-            <h5>私有属性</h5>
-          </div>
-          <div id="privatePropertyWarp">
-          </div>
+
+        <div class="page-header">
+          <h5>控件外部边距</h5>
+        </div>
+        <div id="baseArea">
         </div>
 
+
+
+        <div class="page-header">
+          <h5>私有属性</h5>
+        </div>
+        <div id="userArea">
+        </div>
       </div>
     </div>
   </div>
-
 </body>
-
 </html>

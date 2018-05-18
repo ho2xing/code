@@ -56,13 +56,13 @@
         var methodfilePath = componentArray[methodFileRequestCount].rootDir + "/"
             + componentArray[methodFileRequestCount].dir + "/"
             + componentArray[methodFileRequestCount].methodFileName;
-     
+
         $.ajax({
             type: 'get',
             url: methodfilePath,
             // cache: true,
             success: function (ret) {
-                componentArray[methodFileRequestCount].methodFile =ret;
+                componentArray[methodFileRequestCount].methodFile = ret;
                 methodFileRequestCount++;
                 _loadMethodFile();
             },
@@ -82,13 +82,13 @@
         var telFilePath = componentArray[tplFileRequestCount].rootDir
             + "/" + componentArray[tplFileRequestCount].dir
             + "/" + componentArray[tplFileRequestCount].templateFileName;
-   
+
         $.ajax({
             type: 'get',
             url: telFilePath,
             // cache: true,
             success: function (ret) {
-                console.log(ret);
+          
                 componentArray[tplFileRequestCount].tplFile = ret;
                 tplFileRequestCount++;
                 _loadMethodFile();
@@ -102,17 +102,20 @@
 
 
     function _make() {
-        $.getScript("./dist/jquery.tmpl.min.js", function(){
-            
+        $.getScript("./dist/jquery.tmpl.min.js", function () {
+            var attrArray = new Array();
             for (var i = 0; i < componentArray.length; i++) {
                 var target = componentArray[i].dir + i;
                 $.template(target, componentArray[i].tplFile);
                 $.tmpl(target, componentArray[i].methodFile).appendTo(displayEl);
+                try {
+                    attrArray[i] = { data: componentArray[i].methodFile, name: componentArray[i].dir };
+                } catch{ }
+            }
+            if (_callback != null) {
+                _callback(attrArray);
             }
 
-            if (_callback != null) {
-                _callback();
-            }
         })
     }
     Component.prototype = {
@@ -120,7 +123,7 @@
         add: function (options) {
             componentArray.push(_createItem(options));
         },
-        appendTo: function (el ,callback) {
+        appendTo: function (el, callback) {
             displayEl = el;
             _callback = callback;
             methodFileRequestCount = 0;

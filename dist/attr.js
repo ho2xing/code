@@ -104,13 +104,19 @@
     }
 
     Attr.prototype = {
-        html: function (el, id, callback) {
+        makeBaseAttr: function (el, id, callback) {
             _getBaseAttrHtml(id, function (ret) {
+              
                 el.html(ret);
                 el.find('input[id^=' + attrPrefix + ']').each(function (index) {
-                    $(this).change(function () {
-                        var attrId = $(this).attr("id");
+                    var attrId = $(this).attr("id");
+                    if (_getLocal(id) == "") {
                         _save(id, attrId, $(this).val());
+                    }
+                    _change(id, attrId, $(this).val(), function (data) {
+                        callback(data);
+                    });
+                    $(this).change(function () {
                         _change(id, attrId, $(this).val(), function (data) {
                             callback(data);
                         });
@@ -119,17 +125,22 @@
 
             })
         },
-        phtml: function (el, id, attrs, callback) {
+        makeComAttr: function (el, id, attrs, callback) {
             id = id + pricateIdSuffix;
-            _getPrivateAttrHtml(id, function (ret) {
+            
+            _getPrivateAttrHtml(id, attrs, function (ret) {
                 el.html(ret);
                 el.find('input[id^=' + attrPrefix + ']').each(function (index) {
+                    var attrId = $(this).attr("id");
+                    if (_getLocal(id) == "") {
+                        _save(id, attrId, $(this).val());
+                    }
                     $(this).change(function () {
                         var attrId = $(this).attr("id");
                         _save(id, attrId, $(this).val());
-                        _change(id, attrId, $(this).val(), function (data) {
-                            callback(data);
-                        });
+                        // _change(id, attrId, $(this).val(), function (data) {
+                        //     callback(data);
+                        // });
                     });
                 });
 

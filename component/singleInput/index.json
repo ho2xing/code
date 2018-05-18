@@ -2,10 +2,26 @@
     "id": 2,
     "name": "文本输入框",
     "desc": "",
-    "privateAttr":[
-        "name",
-        "placeholder",
-        "max",
-        "min"
+    "attrs": [
+        {
+            "name": "label",
+            "value": "名称",
+            "type": "text"
+        },
+        {
+            "name": "placeholder",
+            "value": "",
+            "type": "text"
+        },
+        {
+            "name": "max",
+            "value": "",
+            "type": "number"
+        },
+        {
+            "name": "min",
+            "value": "",
+            "type": "number"
+        }
     ]
 }
